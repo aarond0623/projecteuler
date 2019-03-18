@@ -68,7 +68,6 @@ def prime_factors(number):
     except (TypeError, ValueError) as err:
         print("ERROR: argument must be a positive integer.")
         print("%s: %s" % (type(err).__name__, err))
-        return
     if number == 1:
         return []
     primes = prime_sieve(int(number ** 0.5) + 1)
