@@ -4,11 +4,11 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 What is the largest prime factor of the number 600851475143?
 """
 
+from random import randrange
+
+
 def is_prime(number):
-    """
-    Determines if a number is prime or not.
-    """
-    from random import randrange
+    """Determines if a number is prime or not."""
     small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
     if number < 2:
         return False
@@ -36,9 +36,7 @@ def is_prime(number):
 
 
 def prime_sieve(max_p):
-    """
-    Generates a list of primes less than or equal to some max_p.
-    """
+    """Generates a list of primes less than or equal to some max_p."""
     try:
         max_p = int(max_p)
     except (TypeError, ValueError) as err:
