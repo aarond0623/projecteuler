@@ -45,12 +45,11 @@ def prime_sieve(max_p):
         return
     if max_p < 2:
         return []
-    if max_p < 20:
-        return [x for x in [2, 3, 5, 7, 11, 13, 17, 19] if x < max_p]
-
     primes = list(range(1, max_p + 1))
 
-    sieve = prime_sieve(int(max_p ** 0.5 + 1))
+    sieve = list(range(2, int(max_p ** 0.5 + 1)))
+    sieve = [x for x in sieve if x % 2 != 0 and x % 3 != 0 and x % 5 != 0]
+    sieve = [2, 3, 5] + sieve
     for i in sieve:
         for j in range(i, max_p-i+1, i):
             primes[j-1+i] = 0
