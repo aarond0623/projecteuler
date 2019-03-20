@@ -24,14 +24,15 @@ n = 0.
 """
 
 from problem003 import prime_sieve, is_prime
+from problem009 import product
 
 
-if __name__ == '__main__':
-    b_list = prime_sieve(1000) # Because f(0) = b, so b must be prime.
+def longest_quadratic_primes(limit):
+    b_list = prime_sieve(limit) # Because f(0) = b, so b must be prime.
     # Further, when n = 1, p + 1 + even number will produce a non-prime. So a
     # must be odd. The only exception would be if b = 2, in which case if n = 2,
     # n² = 4 and a must again be odd to produce any more primes.
-    a_list = [x for x in list(range(-999,1000)) if x % 2 == 1]
+    a_list = [x for x in list(range(-limit+1,limit)) if x % 2 == 1]
     max_length, max_a, max_b = 0, 0, 0
     for a in a_list:
         for b in b_list:
@@ -42,4 +43,8 @@ if __name__ == '__main__':
                 max_length = n
                 max_a = a
                 max_b = b
-    print(max_a * max_b)
+    return (max_a, max_b)
+
+
+if __name__ == '__main__':
+    print(product(longest_quadratic_primes(1000)))

@@ -27,16 +27,22 @@ Find the thirteen adjacent digits in the 1000-digit number that have the
 greatest product. What is the value of this product?
 """
 
-if __name__ == '__main__':
-    series = open("problem008.txt").read().replace("\n","")
-
+def largest_adjacent_product(number, length):
+    """Finds the largest product made of an adjacent series of digits in a
+    number."""
     max_product = 1
+    number = str(number)
 
-    for i in range(0, len(series) - 13):
+    for i in range(0, len(number) - length):
         product = 1
-        for j in range(0, 13):
-            product *= int(series[i+j])
+        for j in range(0, length):
+            product *= int(number[i + j])
         if product > max_product:
             max_product = product
 
-    print(max_product)
+    return max_product
+
+
+if __name__ == '__main__':
+    series = open("problem008.txt").read().replace("\n","")
+    print(largest_adjacent_product(series, 13))

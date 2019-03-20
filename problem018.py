@@ -49,4 +49,6 @@ def main(file):
 
     return triangle[0][0]
 
-print(main("problem018.txt"))
+
+if __name__ == '__main__':
+    print(main('problem018.txt'))

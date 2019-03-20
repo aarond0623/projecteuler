@@ -9,12 +9,22 @@ There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product of abc.
 """
 
-if __name__ == '__main__':
-    for c in range(334, 1001): 
-    # I have picked 334 as a start point because if a + b + c = 1000, then the
-    # lowest the biggest number can be is 334.
-        for b in range(2, c):
+def product(mult_list):
+    product = 1
+    for mult in mult_list:
+        product *= mult
+    return product
+
+
+def find_pythag_triplet_sum(triplet_sum):
+    """Finds a pythagorean triplet summing to a certain number."""
+    for c in range(triplet_sum // 3, triplet_sum + 1):
+        for b in range(1, c):
             for a in range(1, b):
-                if a**2 + b**2 == c**2 and a + b + c == 1000:
-                    print(a * b * c)
-                    quit()
+                if a**2 + b**2 == c**2 and a + b + c == triplet_sum:
+                    return(a, b, c)
+    return False
+
+
+if __name__ == '__main__':
+    print(product(find_pythag_triplet_sum(1000)))

@@ -21,17 +21,26 @@ abundant numbers.
 from problem012 import factors
 
 
-if __name__ == '__main__':
-    abundants = []
-    for n in range(1, 28124):
-        if sum(factors(n)) - n > n:
-            abundants.append(n)
+def is_abundant(number):
+    """Returns True if a number is abundant."""
+    return sum(factors(number)) - number > number
 
+
+def all_nonabundant_sums():
+    """Returns a list of all the numbers that cannot be expressed as the sum of
+    two abundant numbers."""
+    # All numbers greater than 28123 can be expressed as the sum of two
+    # abundant numbers.
+    max_n = 28123
+    abundants = [x for x in range(1, max_n+1) if is_abundant(x)]
     sums = set()
     for i in range(len(abundants)):
         a = abundants[i]
         for j in range(i, len(abundants)):
             b = abundants[j]
-            if a + b <= 28123:
+            if a + b <= max_n:
                 sums.add(a + b)
-    print(sum(set(range(1, 28124)) - sums))
+    return set(range(1, max_n+1)) - sums
+
+if __name__ == '__main__':
+    print(sum(all_nonabundant_sums()))

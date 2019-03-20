@@ -4,8 +4,9 @@
 What is the sum of the digits of the number 2^1000?
 """
 
+def sum_digits(number):
+    """Sums the digits of a number."""
+    return sum([int(x) for x in str(number)])
+
 if __name__ == '__main__':
-    total = 0
-    for digit in str(2**1000):
-        total += int(digit)
-    print(total)
+    print(sum_digits(2**1000))

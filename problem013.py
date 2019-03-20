@@ -104,14 +104,12 @@ numbers.
 53503534226472524250874054075591789781264330331690
 """
 
-if __name__ == '__main__':
-    file = 'problem013.txt'
+def main(file):
     numbers = []
     for item in open(file).read().split("\n"):
         numbers.append(int(item))
 
-    product = 1
-    for item in numbers:
-        product += item
+    return int(str(sum(numbers))[0:10])
 
-    print(str(product)[0:10])
+if __name__ == '__main__':
+    print(main('problem013.txt'))

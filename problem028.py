@@ -40,17 +40,21 @@ in the same way?
 
 
 def diagonal_generator(offset, max):
-    list = [1]
-    while list[-1] < max ** 2:
-        list.append(list[-1] + len(list) * 8 - offset)
-    if list[-1] > max ** 2:
-        del list[-1]
-    return list
+    lst = [1]
+    while lst[-1] < max ** 2:
+        lst.append(lst[-1] + len(lst) * 8 - offset)
+    if lst[-1] > max ** 2:
+        del lst[-1]
+    return lst
+
+
+def sum_diagonals(size):
+    SE = diagonal_generator(6, size)[1::] # Otherwise 1 will be counted 4x.
+    SW = diagonal_generator(4, size)[1::]
+    NW = diagonal_generator(2, size)[1::]
+    NE = diagonal_generator(0, size)
+    return sum(SE) + sum(SW) + sum(NW) + sum(NE)
 
 
 if __name__ == '__main__':
-    SE = diagonal_generator(6, 1001)[1::] # Otherwise 1 will be counted 4x.
-    SW = diagonal_generator(4, 1001)[1::]
-    NW = diagonal_generator(2, 1001)[1::]
-    NE = diagonal_generator(0, 1001)
-    print(sum(SE) + sum(SW) + sum(NW) + sum(NE))
+    print(sum_diagonals(1001))

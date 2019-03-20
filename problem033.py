@@ -13,13 +13,7 @@ find the value of the denominator.
 """
 
 from problem003 import prime_factors
-
-
-def product(mult_list):
-    product = 1
-    for mult in mult_list:
-        product *= mult
-    return product
+from problem009 import product
 
 
 def simplify_fraction(numerator, denominator):

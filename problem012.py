@@ -44,12 +44,24 @@ def factors(number):
     return sorted(factors)
 
 
-if __name__ == '__main__':
-    n = 500
+def triangle_generator():
+    """Generates triangle numbers."""
     triangle = 1
     number = 1
-    while len(factors(triangle)) < n:
+    while True:
+        yield triangle
         number += 1
         triangle += number
 
-    print(triangle)
+
+def triangle_divisors(n):
+    """Finds the first triangle number with n divisors."""
+    triangle = triangle_generator()
+    t = next(triangle)
+    while len(factors(t)) < n:
+        t = next(triangle)
+    return t
+
+
+if __name__ == '__main__':
+    print(triangle_divisors(500))

@@ -1,4 +1,14 @@
-from projecteuler import prime_sieve, is_prime
+"""
+The primes 3, 7, 109, and 673, are quite remarkable. By taking any two primes
+and concatening them in any order the result will always be prime. For example,
+taking 7 and 109, both 7109 and 1097 are prime. The sum of these four primes,
+792, represents the lowest sum of a set of four primes with this property.
+
+Find the lowest sum for a set of five primes for which any two primes
+concatenate to produce another prime.
+"""
+
+from problem003 import prime_sieve, is_prime
 
 
 def prime_concats(n):
@@ -7,42 +17,38 @@ def prime_concats(n):
     that, when concatenated together, also form a prime.
     """
     primes = prime_sieve(n)
-    prime_concats = {}
+    prime_dict = {}
     for i in range(len(primes)):
         p = primes[i]
-        prime_concats[p] = []
+        prime_dict[p] = []
         for q in primes[i+1:]:
             if is_prime(int(str(p)+str(q))) and is_prime(int(str(q)+str(p))):
-                prime_concats[p].append(q)
+                prime_dict[p].append(q)
     prime_concat_list = {}
-    for p in prime_concats:
-        if prime_concats[p] != []:
-            prime_concat_list[p] = prime_concats[p]
+    for p in prime_dict:
+        if prime_dict[p] != []:
+            prime_concat_list[p] = prime_dict[p]
     return prime_concat_list
 
-concat_list = []
-prime_concats = prime_concats(10000)
-for p in prime_concats:
-    for q in prime_concats[p]:
-        if q in prime_concats:
-            for r in prime_concats[q]:
-                if r in prime_concats and r in prime_concats[p]:
-                    for s in prime_concats[r]:
-                        if (s in prime_concats and
-                                s in prime_concats[p] and
-                                s in prime_concats[q]):
-                            for t in prime_concats[s]:
-                                if (t in prime_concats[p] and
-                                        t in prime_concats[p] and
-                                        t in prime_concats[q] and
-                                        t in prime_concats[r]):
-                                    concat_list.append([p, q, r, s, t])
 
-Sum = float('inf')
-record = None
-for c in concat_list:
-    if sum(c) < Sum:
-        Sum = sum(c)
-        record = c
-print(record)
-print(sum(record))
+def main():
+    concat_list = []
+    prime_dict = prime_concats(10000)
+    for p in prime_dict:
+        for q in prime_dict[p]:
+            if q in prime_dict:
+                for r in prime_dict[q]:
+                    if r in prime_dict and r in prime_dict[p]:
+                        for s in prime_dict[r]:
+                            if (s in prime_dict and
+                                s in prime_dict[p] and
+                                s in prime_dict[q]):
+                                for t in prime_dict[s]:
+                                    if (t in prime_dict[p] and
+                                        t in prime_dict[q] and
+                                        t in prime_dict[r]):
+                                        concat_list.append([p, q, r, s, t])
+    return min([sum(x) for x in concat_list])
+
+if __name__ == '__main__':
+    print(main())
