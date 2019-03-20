@@ -17,12 +17,24 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 """
 
-if __name__ == '__main__':
-    max_n = 1000000
-    collatz_dict = {}
+def collatz(number, steps=1):
+    """Finds the number of steps required to reach 1 using the Collatz
+    sequence."""
+    if number < 1:
+        raise ValueError("Number must be a positive integer.")
+    if number == 1:
+        return steps
+    elif number % 2 == 0:
+        return collatz(number / 2, steps+1)
+    else:
+        return collatz(3 * number + 1, steps+1)
 
+def max_collatz(limit):
+    """Finds the number with the largest Collatz chain under a certain limit.
+    """
+    collatz_dict = {}
     max_steps = 0
-    for number in range(1, max_n):
+    for number in range(1, limit):
         steps = 0
         n = number
         while n != 1:
@@ -39,5 +51,7 @@ if __name__ == '__main__':
         if steps > max_steps:
             max_steps = steps
             max_number = number
+    return max_number
 
-    print(max_number)
+if __name__ == '__main__':
+    print(max_collatz(1000000))
