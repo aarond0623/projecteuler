@@ -45,8 +45,9 @@ def prime_sieve(max_p):
         return
     if max_p < 2:
         return []
-    if max_p < 20:
-        return [x for x in [2, 3, 5, 7, 11, 13, 17, 19] if x < max_p]
+    if max_p < 32:
+        small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+        return [x for x in small_primes if x <= max_p]
 
     primes = list(range(1, max_p + 1))
 
