@@ -45,15 +45,16 @@ def prime_sieve(max_p):
         return
     if max_p < 2:
         return []
-    primes = dict()
-    for i in range(2, max_p + 1):
-        primes[i] = True
+    primes = list(range(1, max_p + 1))
 
-    for p in primes:
-        factors = range(p, max_p + 1, p)
-        for f in factors[1:]:
-            primes[f] = False
-    return [p for p in primes if primes[p] == True]
+    sieve = list(range(2, int(max_p ** 0.5 + 1)))
+    sieve = [x for x in sieve if x % 2 != 0 and x % 3 != 0 and x % 5 != 0]
+    sieve = [2, 3, 5] + sieve
+    for i in sieve:
+        for j in range(i, max_p-i+1, i):
+            primes[j-1+i] = 0
+
+    return [p for p in primes if p != 0][1:]
 
 
 def prime_factors(number):
