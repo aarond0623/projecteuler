@@ -29,45 +29,69 @@ What is the greatest product of four adjacent numbers in the same direction (up,
 down, left, right, or diagonally) in the 20x20 grid?
 """
 
+class ProductTable:
+    def __init__(self, file):
+        _file = file
+        self.table = []
+        for row in open(_file).read().split('\n'):
+            self.table.append(list(map(int, row.split(' '))))
+        self.height = len(self.table)
+        self.width = len(self.table[0])
+
+
+    def horizontal(self, n):
+        max_product = 1
+        for y in range(0, self.height):
+            for x in range(0, self.width - n + 1):
+                p = self.table[y][x]
+                for i in range(1, n):
+                    p *= self.table[y][x + i]
+                if p > max_product:
+                    max_product = p
+        return max_product
+
+
+    def vertical(self, n):
+        max_product = 1
+        for x in range(0, self.width):
+            for y in range(0, self.height - n + 1):
+                p = self.table[y][x]
+                for i in range(1, n):
+                    p *= self.table[y + i][x]
+                if p > max_product:
+                    max_product = p
+        return max_product
+
+
+    def diagonal_lr(self, n):
+        max_product = 1
+        for x in range(0, self.width - n + 1):
+            for y in range(0, self.height - n + 1):
+                p = self.table[y][x]
+                for i in range(1, n):
+                    p *= self.table[y+i][x+i]
+                if p > max_product:
+                    max_product = p
+        return max_product
+
+
+    def diagonal_rl(self, n):
+        max_product = 1
+        for x in range(n - 1, self.width):
+            for y in range(0, self.height - n + 1):
+                p = self.table[y][x]
+                for i in range(1, n):
+                    p *= self.table[y+i][x-i]
+                if p > max_product:
+                    max_product = p
+        return max_product
+
+
+    def max_product(self, n):
+        return max(self.horizontal(n), self.vertical(n),
+                   self.diagonal_lr(n), self.diagonal_rl(n))
+
+
 if __name__ == '__main__':
-    table = []
-    for row in open("problem011.txt").read().split("\n"):
-        table.append(list(map(int, row.split(" "))))
-
-    def horizontal():
-        max_product = 1
-        for y in range(0, 20):
-            for x in range(0, 17):
-                p = table[y][x] * table[y][x+1] * table[y][x+2] * table[y][x+3]
-                if p > max_product:
-                    max_product = p
-        return max_product
-
-    def vertical():
-        max_product = 1
-        for x in range(0, 20):
-            for y in range(0, 17):
-                p = table[y][x] * table[y+1][x] * table[y+2][x] * table[y+3][x]
-                if p > max_product:
-                    max_product = p
-        return max_product
-
-    def diagonal_lr():
-        max_product = 1
-        for x in range(0, 17):
-            for y in range(0, 17):
-                p = table[y][x] * table[y+1][x+1] * table[y+2][x+2] * table[y+3][x+3]
-                if p > max_product:
-                    max_product = p
-        return max_product
-
-    def diagonal_rl():
-        max_product = 1
-        for x in range(3, 20):
-            for y in range(0, 17):
-                p = table[y][x] * table[y+1][x-1] * table[y+2][x-2] * table[y+3][x-3]
-                if p > max_product:
-                    max_product = p
-        return max_product
-
-    print(max(horizontal(), vertical(), diagonal_lr(), diagonal_rl()))
+    table = ProductTable('problem011.txt')
+    print(table.max_product(4))
