@@ -24,8 +24,9 @@ def pandigital_generator(start=1, backwards=False):
 
 def largest_pandigital_prime():
     # The prime cannot have 9 digits, because the sum of the numbers 1 through
-    # 9 is divisible by 9, and hence will never be prime.
-    pandigitals = pandigital_generator(8, True)
+    # 9 is divisible by 9, and hence will never be prime. The same logic holds
+    # for 8, as eliminating 9 from a number divisible by 9 is still divisible.
+    pandigitals = pandigital_generator(7, True)
     while True:
         p = next(pandigitals)
         if str(p)[-1] in '024568':
