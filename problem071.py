@@ -28,7 +28,7 @@ def closest_fraction(n, d):
     return floor(n * d)
 
 # We can't just end here, though. My immediate thought was that since 3/7 =
-# 428571/999999 (because it is a repeating decimal), that because 428571/10^7
+# 428571/999999 (because it is a repeating decimal), that because 428571/10^6
 # was both smaller and part of a fraction with the smallest increments, that
 # must be the answer. But it isn't. Making the numerator smaller decreases the
 # fraction, but making the denominator smaller increases the fraction, so it is
@@ -36,9 +36,16 @@ def closest_fraction(n, d):
 # does, however, make sense to start with larger denominators.
 
 def left_fraction(n, limit):
-    delta = float('inf')
+    closest_delta = float('inf')
     for d in range(limit, 0, -1):
-        
+        x = floor(n * d)
+        delta = abs(n - x/d)
+        # We have to check if the delta is zero, since we want the fraction to
+        # the left, and the delta of 428571/999999 will be 0.
+        if delta < closest_delta and delta != 0:
+            closest_delta = delta
+            closest = (x, d)
+    return closest
 
 if __name__ == '__main__':
-    print(left_fraction(3/7, 10**7))
+    print(left_fraction(3/7, 10**6))
